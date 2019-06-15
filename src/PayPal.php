@@ -10,9 +10,9 @@ namespace Sinevia;
     * and provides easy methods to generate a submit form.
     * <code>
     * // In test mode
-    * $paypal = new PayPal();
+    * $paypal = new \Sinevia\PayPal();
     * // For active mode
-    * // $paypal = new PayPal(false);
+    * // $paypal = new \Sinevia\PayPal(false);
     * 
     * // The amount to be paid
     * $paypal->amount(20);
@@ -72,7 +72,9 @@ class PayPal{
         * @return PayPal
         */
     function amount($amount){
-        if(is_numeric($amount)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>amount($amount)</b>: Parameter <b>$amount</b> MUST BE of type Integer or Float - <b>'.(is_object($amount)?get_class($amount):gettype($amount)).'</b> given!');}
+        if(is_numeric($amount)==false){
+		throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>amount($amount)</b>: Parameter <b>$amount</b> MUST BE of type Integer or Float - <b>'.(is_object($amount)?get_class($amount):gettype($amount)).'</b> given!');
+	}
 		$this->field('amount',$amount);
 		return $this;
     }
@@ -100,10 +102,10 @@ class PayPal{
             'THB', 'TRY', 'USD'
         );
         if(is_string($currency_code)==false){
-            throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>currency_code($currency_code)</b>: Parameter <b>$currency_code</b> MUST BE of type Integer or Float - <b>'.(is_object($currency_code)?get_class($currency_code):gettype($currency_code)).'</b> given!');
+            throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>currency_code($currency_code)</b>: Parameter <b>$currency_code</b> MUST BE of type Integer or Float - <b>'.(is_object($currency_code)?get_class($currency_code):gettype($currency_code)).'</b> given!');
         }
         if(in_array($currency_code, $currency_codes)==false){
-            throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>currency_code($currency_code)</b>: Parameter <b>$currency_code</b> is NOT ACCEPTED by PayPal - <b>'.(is_object($currency_code)?get_class($currency_code):gettype($currency_code)).'</b> given!');
+            throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>currency_code($currency_code)</b>: Parameter <b>$currency_code</b> is NOT ACCEPTED by PayPal - <b>'.(is_object($currency_code)?get_class($currency_code):gettype($currency_code)).'</b> given!');
         }
         $this->field('currency_code',$currency_code);
         return $this;
@@ -123,7 +125,7 @@ class PayPal{
         * @return PayPal
         */
     function email($email){
-        if(is_string($email)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>email($email)</b>: Parameter <b>$email</b> MUST BE of type String - <b>'.(is_object($email)?get_class($email):gettype($email)).'</b> given!');}
+        if(is_string($email)==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>email($email)</b>: Parameter <b>$email</b> MUST BE of type String - <b>'.(is_object($email)?get_class($email):gettype($email)).'</b> given!');}
         $this->field('business',$email);
         return $this;
     }
@@ -139,8 +141,8 @@ class PayPal{
         * @return PayPal
         */
     function image($url){
-        if(is_string($url)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>image($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
-        if(s::str_starts_with($url,"http://")==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>image($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>'.$url.'</b> given!');}
+        if(is_string($url)==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>image($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
+        if(s::str_starts_with($url,"http://")==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>image($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>'.$url.'</b> given!');}
         $this->field('image_url',$url);
         return $this;
     }
@@ -156,7 +158,7 @@ class PayPal{
         * @return PayPal
         */
     function item_name($item_name){
-        if(is_string($item_name)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>item_name($item_name)</b>: Parameter <b>$item_name</b> MUST BE of type String - <b>'.(is_object($item_name)?get_class($item_name):gettype($item_name)).'</b> given!');}
+        if(is_string($item_name)==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>item_name($item_name)</b>: Parameter <b>$item_name</b> MUST BE of type String - <b>'.(is_object($item_name)?get_class($item_name):gettype($item_name)).'</b> given!');}
         $this->field('item_name',$item_name);
         return $this;
     }
@@ -174,7 +176,7 @@ class PayPal{
         */
     function item_number($item_number){
         if(is_numeric($item_number)==false){
-            throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>item_number($item_number)</b>: Parameter <b>$item_number</b> MUST BE of type Integer - <b>'.(is_object($item_number)?get_class($item_number):gettype($item_number)).'</b> given!');
+            throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>item_number($item_number)</b>: Parameter <b>$item_number</b> MUST BE of type Integer - <b>'.(is_object($item_number)?get_class($item_number):gettype($item_number)).'</b> given!');
         }
         $this->field('item_number',$item_number);
         return $this;
@@ -190,7 +192,7 @@ class PayPal{
         * @return PayPal
         */
     function on_cancel($url){
-        if(is_string($url)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
+        if(is_string($url)==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
         if($this->str_starts_with($url,"http://")==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>'.$url.'</b> given!');}
         $this->field('cancel_return',$url);
         return $this;
@@ -205,7 +207,7 @@ class PayPal{
         * @return PayPal
         */
     function on_success($url){
-        if(is_string($url)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
+        if(is_string($url)==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
         if($this->str_starts_with($url,"http://")==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>'.$url.'</b> given!');}
         $this->field('return',$url);
         return $this;
@@ -221,8 +223,8 @@ class PayPal{
         * @return PayPal
         */
     function on_notify($url){
-        if(is_string($url)==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
-        if($this->str_starts_with($url,"http://")==false){throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>'.$url.'</b> given!');}
+        if(is_string($url)==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>'.(is_object($url)?get_class($url):gettype($url)).'</b> given!');}
+        if($this->str_starts_with($url,"http://")==false){throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>'.$url.'</b> given!');}
         $this->field('notify_url',$url);
         return $this;
     }
@@ -239,7 +241,7 @@ class PayPal{
         */
     function shipping($shipping_cost){
         if(is_numeric($shipping_cost)==false){
-            throw new InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>shipping($shipping_cost)</b>: Parameter <b>$shipping_cost</b> MUST BE of type Integer or Float - <b>'.(is_object($shipping_cost)?get_class($shipping_cost):gettype($shipping_cost)).'</b> given!');
+            throw new \InvalidArgumentException('In class <b>'.get_class($this).'</b> in method <b>shipping($shipping_cost)</b>: Parameter <b>$shipping_cost</b> MUST BE of type Integer or Float - <b>'.(is_object($shipping_cost)?get_class($shipping_cost):gettype($shipping_cost)).'</b> given!');
         }
         $this->field('shipping',$shipping_cost);
         return $this;
@@ -279,9 +281,9 @@ class PayPal{
         */
     function form($content=""){
         // START: Check needed variables
-        if(isset($this->fields['amount'])==false)throw new RuntimeException("The amount for the PayPal Form is not set.");
-        if(isset($this->fields['business'])==false)throw new RuntimeException("The bussiness email (money receiver) for the PayPal Form is not set.");
-        if(isset($this->fields['item_name'])==false)throw new RuntimeException("The item name (description of the item) for the PayPal Form is not set.");
+        if(isset($this->fields['amount'])==false)throw new \RuntimeException("The amount for the PayPal Form is not set.");
+        if(isset($this->fields['business'])==false)throw new \RuntimeException("The bussiness email (money receiver) for the PayPal Form is not set.");
+        if(isset($this->fields['item_name'])==false)throw new \RuntimeException("The item name (description of the item) for the PayPal Form is not set.");
         // END: Check needed variables
         $form = '';
         $form .= '<form name="FORM_PAYPAL" method="post" action="'.$this->paypal_url.'">';
@@ -389,7 +391,7 @@ class PayPal{
         * @return void
         */
     function log($directory){
-        if(is_dir($directory)==false)throw new RuntimeException('PayPal Logging Directory "'.$directory.'" DOES NOT exist!');
+        if(is_dir($directory)==false)throw new \RuntimeException('PayPal Logging Directory "'.$directory.'" DOES NOT exist!');
         $this->log_directory = $directory;
         $this->log=true;
         
