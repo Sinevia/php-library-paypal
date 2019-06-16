@@ -198,8 +198,12 @@ class PayPal
      */
     public function on_cancel($url)
     {
-        if (is_string($url) == false) {throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>' . (is_object($url) ? get_class($url) : gettype($url)) . '</b> given!');}
-        if ($this->str_starts_with($url, "http://") == false) {throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>' . $url . '</b> given!');}
+        if (is_string($url) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>' . (is_object($url) ? get_class($url) : gettype($url)) . '</b> given!');
+        }
+        if ($this->str_starts_with($url, "https://") == false AND $this->str_starts_with($url, "http://") == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_cancel($url)</b>: Parameter <b>$url</b> MUST start with "https://" or "http://" - <b>' . $url . '</b> given!');
+        }
         $this->field('cancel_return', $url);
         return $this;
     }
@@ -214,8 +218,12 @@ class PayPal
      */
     public function on_success($url)
     {
-        if (is_string($url) == false) {throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>' . (is_object($url) ? get_class($url) : gettype($url)) . '</b> given!');}
-        if ($this->str_starts_with($url, "http://") == false) {throw new InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>' . $url . '</b> given!');}
+        if (is_string($url) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>' . (is_object($url) ? get_class($url) : gettype($url)) . '</b> given!');
+        }
+        if ($this->str_starts_with($url, "https://") == false AND $this->str_starts_with($url, "http://") == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_success($url)</b>: Parameter <b>$url</b> MUST start with "https://" or "http://" - <b>' . $url . '</b> given!');
+        }
         $this->field('return', $url);
         return $this;
     }
@@ -231,8 +239,12 @@ class PayPal
      */
     public function on_notify($url)
     {
-        if (is_string($url) == false) {throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>' . (is_object($url) ? get_class($url) : gettype($url)) . '</b> given!');}
-        if ($this->str_starts_with($url, "http://") == false) {throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST start with "http://" - <b>' . $url . '</b> given!');}
+        if (is_string($url) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST BE of type String - <b>' . (is_object($url) ? get_class($url) : gettype($url)) . '</b> given!');
+        }
+        if ($this->str_starts_with($url, "https://") == false AND $this->str_starts_with($url, "http://") == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_notify($url)</b>: Parameter <b>$url</b> MUST start with "https://" or "http://" - <b>' . $url . '</b> given!');
+        }
         $this->field('notify_url', $url);
         return $this;
     }
