@@ -43,6 +43,7 @@ class PayPal
     private $fields = array("cmd" => "_xclick", "currency_code" => "USD", "lc" => "US", "page_style" => "PayPal", "rm" => "2");
     private $log = false;
     private $log_directory = false;
+    
 
     /**
      * @param $is_test whether to run the code in sandbox
@@ -54,6 +55,13 @@ class PayPal
         } else {
             $this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
         }
+    }
+    
+    /**
+     * Returns the URL where the request will be send to
+     */
+    public function getUrl(){
+        return $this->paypal_url;
     }
     
     /**
