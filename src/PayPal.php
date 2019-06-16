@@ -44,25 +44,18 @@ class PayPal
     private $log = false;
     private $log_directory = false;
 
-    //======================= START OF CONSTRUCTOR ========================//
-    //  CONSTRUCTOR: __construct                                           //
-    //=====================================================================//
+    /**
+     * @param $is_test whether to run the code in sandbox
+     */
     public function __construct($is_test = true)
     {
         if ($is_test == true) {
-            //$this->paypal_url = s::this_url()."?a=deposit_paypal_complete";
             $this->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
         } else {
             $this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
         }
     }
-    //=====================================================================//
-    //  CONSTRUCTOR: __construct                                           //
-    //========================== END OF METHOD ============================//
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: amount                                                    //
-    //=====================================================================//
+    
     /**
      * The ammount to be paid by the service buyer. This is required field for
      * the PayPal form generation.
@@ -78,13 +71,7 @@ class PayPal
         $this->field('amount', $amount);
         return $this;
     }
-    //=====================================================================//
-    //  METHOD: amount                                                     //
-    //========================== END OF METHOD ============================//
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: currency_code                                              //
-    //=====================================================================//
+    
     /**
      * The ammount to be paid by the service buyer. This is required field for
      * the PayPal form generation.
@@ -111,13 +98,7 @@ class PayPal
         $this->field('currency_code', $currency_code);
         return $this;
     }
-    //=====================================================================//
-    //  METHOD: currency_code                                              //
-    //========================== END OF METHOD ============================//
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: email                                                      //
-    //=====================================================================//
+    
     /**
      * The email the payment is to be made to. This is the "sellers" email.
      * This is required field for the PayPal form generation.
@@ -132,9 +113,6 @@ class PayPal
         return $this;
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: image                                                      //
-    //=====================================================================//
     /**
      * The image to be shown on the PayPal page.
      * PS. Not Working in Sandbox
@@ -149,10 +127,7 @@ class PayPal
         $this->field('image_url', $url);
         return $this;
     }
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: item_name                                                  //
-    //=====================================================================//
+    
     /**
      * The name of the item to sell. This is required field for
      * the PayPal form generation.
@@ -167,9 +142,6 @@ class PayPal
         return $this;
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: item_number                                                    //
-    //=====================================================================//
     /**
      * The pass through variable to track the product or service purchased.
      * The value specified will be returned back to merchant upon completion
@@ -187,9 +159,6 @@ class PayPal
         return $this;
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_cancel                                                  //
-    //=====================================================================//
     /**
      * The URL that the buyer will see after a cancelled payment
      *
@@ -207,9 +176,7 @@ class PayPal
         $this->field('cancel_return', $url);
         return $this;
     }
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_success                                                 //
-    //=====================================================================//
+    
     /**
      * The URL that the buyer will see after a successful payment
      *
@@ -249,9 +216,6 @@ class PayPal
         return $this;
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: shipping                                                   //
-    //=====================================================================//
     /**
      * Specifies, the shipping charge, if specified it will be added on
      * top of the price of the item.
@@ -267,10 +231,7 @@ class PayPal
         $this->field('shipping', $shipping_cost);
         return $this;
     }
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: field                                                      //
-    //=====================================================================//
+    
     /**
      * Sets fileds to the PayPal class. For available fields see the PayPal
      * API.
@@ -293,9 +254,7 @@ class PayPal
         $this->fields[$name] = (string) $value;
         return $this;
     }
-    //========================= START OF METHOD ===========================//
-    //  METHOD: get_form                                                   //
-    //=====================================================================//
+    
     /**
      * Returns a form ready to be send to PayPal for payment
      *
@@ -326,9 +285,7 @@ class PayPal
         $form .= '</form>';
         return $form;
     }
-    //========================= START OF METHOD ===========================//
-    //  METHOD: status                                                     //
-    //=====================================================================//
+    
     /**
      * Gets the status of the PayPal request. Convenient, if the PayPal
      * class is used on one page.
@@ -336,24 +293,21 @@ class PayPal
      */
     public function status()
     {
-        if (isset($_GET["pp_a"]) && $_GET["pp_a"] == "success") {
+        if (isset($_REQUEST["pp_a"]) && $_REQUEST["pp_a"] == "success") {
             return "success";
         }
 
-        if (isset($_GET["pp_a"]) && $_GET["pp_a"] == "cancel") {
+        if (isset($_REQUEST["pp_a"]) && $_REQUEST["pp_a"] == "cancel") {
             return "cancel";
         }
 
-        if (isset($_GET["pp_a"]) && $_GET["pp_a"] == "notify") {
+        if (isset($_REQUEST["pp_a"]) && $_REQUEST["pp_a"] == "notify") {
             return "notify";
         }
 
         return false;
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: verify_ipn                                                 //
-    //=====================================================================//
     /**
      * Verifies the IPN success.
      * @return Boolean true, on success or false, on fail
@@ -365,10 +319,6 @@ class PayPal
         $path = $url["path"];
 
         // START: Prepare the post string
-        /*
-        $req = 'cmd=_notify-validate';
-        foreach ($_POST as $key => $value){ $value = urlencode(stripslashes($value)); $req .= "&$key=$value"; }
-         */
         $post_string = '';
         foreach ($_POST as $field => $value) {
             $this->ipn_data["$field"] = $value;
@@ -436,13 +386,7 @@ class PayPal
         return false;
         // END: Failed
     }
-    //=====================================================================//
-    //  METHOD: verify_ipn                                                 //
-    //========================== END OF METHOD ============================//
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: log                                                        //
-    //=====================================================================//
     /**
      * Turns on the logging for this class in the specified directory.
      * @param $dirname
@@ -458,9 +402,7 @@ class PayPal
         $this->log = true;
 
     }
-    //========================= START OF METHOD ===========================//
-    //  METHOD: write_log                                                  //
-    //=====================================================================//
+    
     /**
      * Turns on the logging for this class in the specified directory.
      * @param $dirname
@@ -476,9 +418,6 @@ class PayPal
         $result = file_put_contents($log_file, $msg);
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: str_starts_with                                            //
-    //=====================================================================//
     /**
      * Checks if a string starts with another string.
      * <code>
@@ -491,7 +430,4 @@ class PayPal
     {
         return (substr($string, 0, strlen($match)) == $match) ? true : false;
     }
-    //=====================================================================//
-    //  METHOD: str_starts_with                                            //
-    //========================== END OF METHOD ============================//
 }
